@@ -6,6 +6,7 @@ document.querySelector('#create-todo').addEventListener('submit', (event) => {
     const todo = event.target.elements.createToDo.value;
     newtodo.textContent = todo;
     todos.push({
+        id: uuidv4(),
         text: todo,
         completed: false
     });
