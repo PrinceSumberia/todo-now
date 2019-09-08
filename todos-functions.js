@@ -39,8 +39,15 @@ const generateTodosDOM = (todo) => {
     });
 
     checkboxElement.addEventListener('change', (event) => {
-        console.log(todo);
-        console.log(event);
+        if (event.target.checked) {
+            checkTodoStatus(todo.id, true);
+            saveTodos(todos);
+            renderToDo(todos);
+        } else {
+            checkTodoStatus(todo.id, false);
+            saveTodos(todos);
+            renderToDo(todos);
+        }
     });
 
     // Returing the Parent Div Element
@@ -59,7 +66,6 @@ const renderToDo = (todos) => {
 // Render ToDos Summary
 const todoSummary = (todos) => {
     const filterdTodos = todos.filter((todo) => !todo.completed);
-    console.log(filterdTodos.length);
     document.querySelector('#summary').innerHTML = '';
     const filterdTodosParagraph = document.createElement('h2');
     filterdTodosParagraph.textContent = `You have ${filterdTodos.length} todos left.`;
@@ -74,4 +80,15 @@ const removeToDo = (id) => {
     if (todoIndex > -1) {
         todos.splice(todoIndex, 1);
     }
-} 
+}
+
+// Mark or Unmark Todo as completed
+const checkTodoStatus = (id, status) => {
+    const todoIndex = todos.findIndex((todo) => {
+        return todo.id === id
+    });
+
+    if (todoIndex > -1) {
+        todos[todoIndex].completed = status;
+    }
+}
