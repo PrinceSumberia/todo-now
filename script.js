@@ -1,3 +1,5 @@
+'use strict'
+
 const todos = getSavedTodos();
 
 document.querySelector('#create-todo').addEventListener('submit', (event) => {

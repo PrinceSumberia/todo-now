@@ -1,9 +1,11 @@
+'use strict'
+
 // Get Saved ToDos From the LocalStorage
 const getSavedTodos = () => {
     const todosJson = localStorage.getItem('todos');
-    if (todosJson != null) {
-        return JSON.parse(todosJson);
-    } else {
+    try {
+        return todosJson ? JSON.parse(todosJson) : []
+    } catch (error) {
         return [];
     }
 };
