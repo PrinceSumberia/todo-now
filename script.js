@@ -2,15 +2,14 @@ const todos = getSavedTodos();
 
 document.querySelector('#create-todo').addEventListener('submit', (event) => {
     event.preventDefault();
-    const newtodo = document.createElement('p');
     const todo = event.target.elements.createToDo.value;
-    newtodo.textContent = todo;
-    todos.push({
+    const newtodo = {
         id: uuidv4(),
         text: todo,
         completed: false
-    });
-    document.querySelector('#todos').appendChild(newtodo);
+    };
+    todos.push(newtodo);
+    document.querySelector('#todos').appendChild(generateTodosDOM(newtodo));
     saveTodos(todos);
     todoSummary(todos);
     event.target.elements.createToDo.value = '';
@@ -19,17 +18,13 @@ document.querySelector('#create-todo').addEventListener('submit', (event) => {
 document.querySelector('#hide-completed').addEventListener('change', (event) => {
     document.querySelector('#todos').innerHTML = '';
     if (event.target.checked) {
-        todos.forEach((todo) => {
-            if (!todo.completed) {
-                const para = document.createElement('p');
-                para.textContent = todo.text;
-                document.querySelector('#todos').appendChild(para);
-            }
+        const filteredToDos = todos.filter((todo) => {
+            return !todo.completed;
         });
+        renderToDo(filteredToDos);
     } else {
         renderToDo(todos);
     }
 });
 
-todoSummary(todos);
 renderToDo(todos);

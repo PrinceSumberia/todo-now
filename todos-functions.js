@@ -32,8 +32,15 @@ const generateTodosDOM = (todo) => {
     para.appendChild(textElement);
     para.appendChild(button);
 
+    button.addEventListener('click', (event) => {
+        removeToDo(todo.id);
+        saveTodos(todos);
+        renderToDo(todos);
+    });
+
     checkboxElement.addEventListener('change', (event) => {
         console.log(todo);
+        console.log(event);
     });
 
     // Returing the Parent Div Element
@@ -42,6 +49,8 @@ const generateTodosDOM = (todo) => {
 
 // Render ToDos
 const renderToDo = (todos) => {
+    document.querySelector('#todos').innerHTML = ''
+    todoSummary(todos);
     todos.forEach((todo) => {
         document.querySelector('#todos').appendChild(generateTodosDOM(todo));
     });
@@ -56,3 +65,13 @@ const todoSummary = (todos) => {
     filterdTodosParagraph.textContent = `You have ${filterdTodos.length} todos left.`;
     document.querySelector('#summary').appendChild(filterdTodosParagraph);
 };
+
+// Remove ToDo from the array
+const removeToDo = (id) => {
+    const todoIndex = todos.findIndex((todo) => {
+        return todo.id === id
+    });
+    if (todoIndex > -1) {
+        todos.splice(todoIndex, 1);
+    }
+} 
