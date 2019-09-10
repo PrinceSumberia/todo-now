@@ -21,12 +21,12 @@ const generateTodosDOM = (todo) => {
     const para = document.createElement('div');
     const textElement = document.createElement('span');
     const checkboxElement = document.createElement('input');
-    const button = document.createElement('button');
+    const removeButton = document.createElement('button');
 
     // Setting Elements Attributes and Text Content
     checkboxElement.setAttribute('type', 'checkbox');
     checkboxElement.checked = todo.completed;
-    button.textContent = 'x';
+    removeButton.textContent = 'x';
     textElement.textContent = todo.text;
 
     // Appending Elements to Parent Div
@@ -34,7 +34,7 @@ const generateTodosDOM = (todo) => {
     para.appendChild(textElement);
     para.appendChild(button);
 
-    button.addEventListener('click', (event) => {
+    removeButton.addEventListener('click', (event) => {
         removeToDo(todo.id);
         saveTodos(todos);
         renderToDo(todos);
