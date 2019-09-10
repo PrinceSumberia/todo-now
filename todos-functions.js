@@ -32,7 +32,7 @@ const generateTodosDOM = (todo) => {
     // Appending Elements to Parent Div
     para.appendChild(checkboxElement);
     para.appendChild(textElement);
-    para.appendChild(button);
+    para.appendChild(removeButton);
 
     removeButton.addEventListener('click', (event) => {
         removeToDo(todo.id);
