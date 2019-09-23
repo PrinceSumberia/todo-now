@@ -18,7 +18,8 @@ const saveTodos = (todos) => {
 // Generate TodosDOM
 const generateTodosDOM = (todo) => {
     // Create Elements
-    const para = document.createElement('div');
+    const para = document.createElement('label');
+    const containerEl = document.createElement('div');
     const textElement = document.createElement('span');
     const checkboxElement = document.createElement('input');
     const removeButton = document.createElement('button');
@@ -26,12 +27,16 @@ const generateTodosDOM = (todo) => {
     // Setting Elements Attributes and Text Content
     checkboxElement.setAttribute('type', 'checkbox');
     checkboxElement.checked = todo.completed;
-    removeButton.textContent = 'x';
+    para.classList.add('list-item');
+    containerEl.classList.add('list-item__container');
+    para.appendChild(containerEl);
+    removeButton.textContent = 'remove';
+    removeButton.classList.add('button', 'button--text')
     textElement.textContent = todo.text;
 
     // Appending Elements to Parent Div
-    para.appendChild(checkboxElement);
-    para.appendChild(textElement);
+    containerEl.appendChild(checkboxElement);
+    containerEl.appendChild(textElement);
     para.appendChild(removeButton);
 
     removeButton.addEventListener('click', (event) => {
@@ -60,9 +65,16 @@ const generateTodosDOM = (todo) => {
 const renderToDo = (todos) => {
     document.querySelector('#todos').innerHTML = ''
     todoSummary(todos);
-    todos.forEach((todo) => {
-        document.querySelector('#todos').appendChild(generateTodosDOM(todo));
-    });
+    if (todos.length > 0) {
+        todos.forEach((todo) => {
+            document.querySelector('#todos').appendChild(generateTodosDOM(todo));
+        });
+    } else {
+        const messageEl = document.createElement('p');
+        messageEl.classList.add('empty-message');
+        messageEl.textContent = "No to-dos to show";
+        document.querySelector('#todos').appendChild(messageEl)
+    }
 };
 
 // Render ToDos Summary
@@ -70,7 +82,9 @@ const todoSummary = (todos) => {
     const filterdTodos = todos.filter((todo) => !todo.completed);
     document.querySelector('#summary').innerHTML = '';
     const filterdTodosParagraph = document.createElement('h2');
-    filterdTodosParagraph.textContent = `You have ${filterdTodos.length} todos left.`;
+    filterdTodosParagraph.classList.add('list-title');
+    const plural = filterdTodos.length === 1 ? '' : 's';
+    filterdTodosParagraph.textContent = `You have ${filterdTodos.length} todo${plural} left.`;
     document.querySelector('#summary').appendChild(filterdTodosParagraph);
 };
 
